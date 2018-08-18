@@ -26,6 +26,35 @@ module RestfulKashflow
       @customer[customer_id] ||= Services::Customer.new(@api_service, customer_id)
     end
 
+    def new_customer(name: , email:, first_name:, last_name:)
+      customer = Services::Customer.create(
+        @api_service,
+        name,
+        email,
+        first_name,
+        last_name
+      )
+
+      puts pp customer
+      puts customer.class
+      puts customer.first
+      puts customer["Code"]
+      puts customer["Contacts"].first["Email"]
+
+      puts mandate = Services::Customer.get_mandate(
+        api_service: @api_service,
+        code: customer["Code"]
+      )
+
+      mandate = Services::Customer.create_mandate(
+        api_service: @api_service,
+        code: customer["Code"],
+        email: customer["Contacts"].first["Email"]
+      )
+      puts mandate
+      return { customer: customer, mandate: mandate }
+    end
+
     private
 
     def url_for_environment(environment)

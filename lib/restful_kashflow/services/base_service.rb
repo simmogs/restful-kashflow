@@ -4,18 +4,32 @@ module RestfulKashflow
 
       private
 
-      def call_url
-        session_id = @api_service.session_token
-        full_url = "#{@api_service.url}#{@url}"
+      def self.call_url(api_service, url, method = 'get', body = "")
+        session_id = api_service.session_token
+        full_url = "#{api_service.url}#{url}"
 
-        puts "Calling #{full_url}"
+        puts "Calling #{full_url} with method #{method}"
 
-        @response = RestClient.get full_url,
-                                    {
-                                      content_type: :json,
-                                      accept: :json,
-                                      Authorization: "KfToken #{session_id}"
-                                    }
+        begin
+          if method == 'get'
+            RestClient.get full_url,
+                                        {
+                                          content_type: :json,
+                                          accept: :json,
+                                          Authorization: "KfToken #{session_id}"
+                                        }
+          elsif method == 'post'
+            RestClient.post full_url, body,
+                                        {
+                                          content_type: :json,
+                                          accept: :json,
+                                          Authorization: "KfToken #{session_id}"
+                                        }
+          end
+        rescue RestClient::ExceptionWithResponse => e
+          puts e.response
+          return nil
+        end
       end
     end
   end
