@@ -45,17 +45,21 @@ module RestfulKashflow
 
       def self.create_mandate(api_service:, code:, email:)
         url = "/customers/#{code}/mandates"
-        puts "URL : #{url}"
 
         body = {
-          "amount": 2000,
-          "title": "Butterware Direct Debit Mandate",
-          "description": "Butterware Direct Debit Mandate",
-          "EMailId": email,
-          "amountvalidity": "Monthly"
+          "Amount": 2000,
+          "Email": {
+            "To": email,
+            "Subject": "Butterware Direct Debit Mandate",
+            "Body": "Butterware Direct Debit Mandate",
+            "IsHtml": true,
+            "SenderAddress": "accounts@butterware.co.uk",
+            "SenderName": "Butterware"
+          },
+          "Description": "Butterware Direct Debit Mandate",
+          "AmountValidity": "Monthly",
+          "CustomerCode": code
         }.to_json
-
-        puts body
 
         response = call_url(api_service, url, 'post', body)
 
