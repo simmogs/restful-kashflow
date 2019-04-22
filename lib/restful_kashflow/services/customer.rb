@@ -16,6 +16,10 @@ module RestfulKashflow
         !!@customer["IsGoCardlessMandateSet"]
       end
 
+      def raw
+        @customer.dup
+      end
+
       def self.create(api_service, name, email, first_name, last_name)
         url = "/customers"
 
