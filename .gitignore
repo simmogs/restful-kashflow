@@ -1,1 +1,14 @@
 demo2.rb
+# Ignore rspec example
+spec/examples.txt
+
+# Ignore coverage results
+/coverage
+.tm_properties
+spec/	.txt
+
+# Ignore editor/IDE config
+/.idea
+
+.DS_Store
+
