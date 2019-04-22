@@ -1,4 +1,4 @@
-require_relative './base_service'
+require_relative "./base_service"
 
 module RestfulKashflow
   module Services
@@ -7,7 +7,7 @@ module RestfulKashflow
         @url = "/customers/#{customer_id}"
         @api_service = api_service
 
-        response = Customer::call_url(@api_service, @url)
+        response = Customer.call_url(@api_service, @url)
 
         @customer = JSON.parse(response.body)
       end
@@ -25,12 +25,12 @@ module RestfulKashflow
             {
               "email": email,
               "firstname": first_name,
-              "lastname": last_name
-            }
-          ]
+              "lastname": last_name,
+            },
+          ],
         }.to_json
 
-        response = call_url(api_service, url, 'post', body)
+        response = call_url(api_service, url, "post", body)
 
         @customer = JSON.parse(response.body)
       end
@@ -38,7 +38,7 @@ module RestfulKashflow
       def self.get_mandate(api_service:, code:)
         url = "/customers/#{code}/mandates"
 
-        response = call_url(api_service, url, 'get')
+        response = call_url(api_service, url, "get")
 
         @customer_mandate = JSON.parse(response.body)
       end
@@ -54,14 +54,14 @@ module RestfulKashflow
             "Body": "Butterware Direct Debit Mandate",
             "IsHtml": true,
             "SenderAddress": "accounts@butterware.co.uk",
-            "SenderName": "Butterware"
+            "SenderName": "Butterware",
           },
           "Description": "Butterware Direct Debit Mandate",
           "AmountValidity": "Monthly",
-          "CustomerCode": code
+          "CustomerCode": code,
         }.to_json
 
-        response = call_url(api_service, url, 'post', body)
+        response = call_url(api_service, url, "post", body)
 
         @customer_mandate = JSON.parse(response.body)
       end

@@ -1,13 +1,11 @@
-require 'uri'
-require 'base64'
+require "uri"
+require "base64"
 
 module RestfulKashflow
   class ApiService
-
     attr_reader :session_token, :url
 
     def initialize(username, password, memorable_word, url, options)
-
       @username = username
       @password = password
       @memorable_word = memorable_word
@@ -28,11 +26,11 @@ module RestfulKashflow
     def start_first_connection
       puts "Starting first connection to Kashflow Restful API"
       response = RestClient.post "#{@url}/sessiontoken",
-                                  username_and_password_hash.to_json,
-                                  {
-                                    content_type: :json,
-                                    accept: :json
-                                  }
+        username_and_password_hash.to_json,
+        {
+          content_type: :json,
+          accept: :json,
+        }
       hash = JSON.parse(response.body)
 
       @temporary_token = hash["TemporaryToken"]
@@ -44,11 +42,11 @@ module RestfulKashflow
     def start_second_connection
       puts "Starting second connection to Kashflow Restful API"
       response = RestClient.put "#{@url}/sessiontoken",
-                                  generate_second_response.to_json,
-                                  {
-                                    content_type: :json,
-                                    accept: :json
-                                  }
+        generate_second_response.to_json,
+        {
+          content_type: :json,
+          accept: :json,
+        }
       hash = JSON.parse(response.body)
 
       @session_token = hash["SessionToken"]
@@ -57,20 +55,20 @@ module RestfulKashflow
     def username_and_password_hash
       {
         "Password": @password,
-        "UserName": @username
+        "UserName": @username,
       }
     end
 
     def generate_second_response
       {
         "TemporaryToken": @temporary_token,
-        "MemorableWordList": memorable_word_list_hash
+        "MemorableWordList": memorable_word_list_hash,
       }
     end
 
     def memorable_word_list_hash
       @word_list.inject([]) do |memo, a|
-        memo << { "Position": a, "Value": @memorable_word[a-1] }
+        memo << {"Position": a, "Value": @memorable_word[a - 1]}
       end
     end
   end
