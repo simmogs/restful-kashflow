@@ -34,24 +34,28 @@ module RestfulKashflow
         last_name
       )
 
-      puts pp customer
-      puts customer.class
-      puts customer.first
-      puts customer["Code"]
-      puts customer["Contacts"].first["Email"]
+      # puts pp customer
+      # puts customer.class
+      # puts customer.first
+      # puts customer["Code"]
+      # puts customer["Contacts"].first["Email"]
+      #
+      # puts mandate = Services::Customer.get_mandate(
+      #   api_service: @api_service,
+      #   code: customer["Code"]
+      # )
+      #
+      # mandate = Services::Customer.create_mandate(
+      #   api_service: @api_service,
+      #   code: customer["Code"],
+      #   email: customer["Contacts"].first["Email"]
+      # )
+      # puts mandate
+      # {customer: customer, mandate: mandate}
+    end
 
-      puts mandate = Services::Customer.get_mandate(
-        api_service: @api_service,
-        code: customer["Code"]
-      )
+    def new_mandate(code:)
 
-      mandate = Services::Customer.create_mandate(
-        api_service: @api_service,
-        code: customer["Code"],
-        email: customer["Contacts"].first["Email"]
-      )
-      puts mandate
-      {customer: customer, mandate: mandate}
     end
 
     private

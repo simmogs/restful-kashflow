@@ -7,7 +7,7 @@ module RestfulKashflow
         session_id = api_service.session_token
         full_url = "#{api_service.url}#{url}"
 
-        puts "Calling #{full_url} with method #{method}"
+        puts "Calling #{full_url} with method #{method} and body: #{body}"
 
         begin
           if method == "get"
