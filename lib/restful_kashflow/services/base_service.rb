@@ -25,9 +25,6 @@ module RestfulKashflow
                 Authorization: "KfToken #{session_id}",
               }
           end
-        rescue RestClient::ExceptionWithResponse => e
-          puts e.response
-          return nil
         end
       end
     end
